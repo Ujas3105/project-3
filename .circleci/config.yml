@@ -170,7 +170,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      - run: cat ~/project/.circleci/ansible/inventory.txt
+      
 
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}     
@@ -437,9 +437,9 @@ workflows:
           requires: [build-frontend]
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [main]
+          # filters:
+          #   branches:
+          #     only: [main]
       # - configure-infrastructure:
       #     requires: [deploy-infrastructure]
       # - run-migrations:
