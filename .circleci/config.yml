@@ -175,31 +175,31 @@ jobs:
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}     
 
-  # configure-infrastructure:
-  #   docker:
-  #     - image: python:3.7-alpine3.11
-  #   steps:
-  #     - checkout
-  #     - add_ssh_keys: 
-  #         fingerprints: ["48:68:19:5d:65:f0:a9:ba:e1:d6:17:ad:3f:73:8d:43"]
-  #     - attach_workspace:
-  #         at: ~/
-  #     - run:
-  #         name: Install dependencies needed by playbook 
-  #         command: |
-  #           apk add --update ansible
-  #           apk add --update --no-cache python3 py3-pip
-  #           /usr/local/bin/python -m pip install --upgrade pip
-  #           pip install awscli
-  #     - run:
-  #         name: Configure server
-  #         command: |
-  #           cd ~/project/.circleci/ansible
-  #           echo "Ayodeji your back-end server public IP address is:"
-  #           cat inventory.txt
-  #           ansible-playbook -i inventory.txt configure-server.yml 
-  #     - destroy-environment:
-  #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}    
+  configure-infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys: 
+          fingerprints: ["8a:ae:29:7c:d5:ee:36:fa:e2:a3:c6:99:6e:87:a1:c4"]
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies needed by playbook 
+          command: |
+            apk add --update ansible
+            apk add --update --no-cache python3 py3-pip
+            /usr/local/bin/python -m pip install --upgrade pip
+            pip install awscli
+      - run:
+          name: Configure server
+          command: |
+            cd ~/project/.circleci/ansible
+            echo "Ayodeji your back-end server public IP address is:"
+            cat inventory.txt
+            ansible-playbook -i inventory.txt configure-server.yml 
+      - destroy-environment:
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}    
 
   # run-migrations:
   #   docker:
@@ -440,8 +440,8 @@ workflows:
           filters:
             branches:
               only: [main]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
       # - run-migrations:
       #     requires: [configure-infrastructure]
       # - deploy-frontend:
