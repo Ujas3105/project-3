@@ -214,6 +214,7 @@ jobs:
             npm run migrations >> migrations_dump.txt
             ls -al
             cat migrations_dump.txt
+           # what is this
       - run:
           name: Send migration results to kvdb.io
           command: |
