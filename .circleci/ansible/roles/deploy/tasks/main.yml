@@ -1,11 +1,11 @@
 ---
 - name: Update packages.
-  become: yes
+  become: true
   apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Install prerequisites
-  become: yes
+  become: true
   apt:
     name:
       - apt-transport-https
@@ -19,13 +19,13 @@
   shell: curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
 
 - name: Install nodejs 13
-  become: yes
+  become: true
   apt:
     name: nodejs
     state: present
 
 - name: Install pm2
-  become: yes
+  become: true
   npm:
     name: pm2
     state: present
@@ -33,7 +33,8 @@
     production: yes
 
 - name: Remove dependencies that are no longer required
-  become: yes
+  become: true
   apt:
-    autoremove: yes
+    autoremove: true
+    
     pm2 start npm -- start
